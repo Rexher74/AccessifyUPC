@@ -1,4 +1,4 @@
-# Auto Login UPC
+# Accessify: Login automático para la UPC
 
 Extensión de navegador (Chrome / Edge / Brave) que inicia sesión automáticamente en
 **https://login.upc.edu/**, incluido el segundo factor de autenticación (2FA), con un solo clic.
