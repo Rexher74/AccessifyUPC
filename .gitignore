@@ -1,0 +1,32 @@
+# Referencias locales (capturas HTML de las páginas UPC)
+2FAHTML.html
+loginHTML.html
+
+# Duplicados en raíz (las copias oficiales están en assets/)
+/img1.png
+/img2.png
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Credenciales y entorno local
+.env
+.env.*
+*.pem
+
+# Dependencias y builds (si se añaden más adelante)
+node_modules/
+dist/
+build/
+*.zip
+
+# Logs y cachés
+*.log
+.cache/
+
+# Editores (configuración personal)
+.idea/
+*.swp
+*.swo
+*~

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessify UPC — Configuración</title>
+  <style>
+    :root {
+      --blue: #0067b1;
+      --blue-dark: #00558f;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --text: #1b1b1b;
+      --muted: #6b7280;
+      --border: #e1e5ea;
+      --ok: #1a7f37;
+      --err: #b42318;
+      --warn-bg: #fff7ed;
+      --warn-border: #fed7aa;
+      --info-bg: #d4e6f3;
+      --info-border: #0067b152;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 32px 16px;
+    }
+    main {
+      max-width: 520px; margin: 0 auto; background: var(--card);
+      border: 1px solid var(--border); border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+      padding: 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+    .brand .logo {
+      width: 38px; height: 38px; border-radius: 10px; flex: none;
+      object-fit: contain;
+    }
+    h1 { font-size: 19px; margin: 0; }
+    .lead { color: var(--muted); font-size: 13px; margin: 6px 0 20px; line-height: 1.5; }
+    h2 { font-size: 14px; margin: 26px 0 6px; }
+    .hint { color: var(--muted); font-size: 12px; margin: 0 0 12px; line-height: 1.5; }
+    label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: 11px 12px; font-size: 14px;
+      border: 1px solid var(--border); border-radius: 9px; background: #fff;
+    }
+    input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,103,177,.12); }
+    .pw { position: relative; }
+    .pw input { padding-right: 44px; }
+    .pw button {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      border: none; background: none; cursor: pointer; font-size: 16px; padding: 6px; color: var(--muted);
+    }
+
+    /* Instrucciones */
+    details.guide {
+      border: 1px solid #d4e6f3; background: #f7fbfe; border-radius: 12px;
+      padding: 4px 14px; margin-bottom: 8px;
+    }
+    details.guide > summary {
+      font-size: 14px; font-weight: 700; color: var(--blue); cursor: pointer;
+      padding: 10px 0; list-style: none;
+    }
+    details.guide > summary::-webkit-details-marker { display: none; }
+    details.guide > summary::before { content: "▸ "; }
+    details.guide[open] > summary::before { content: "▾ "; }
+    .guide ol { margin: 4px 0 14px; padding-left: 22px; }
+    .guide li { font-size: 13px; line-height: 1.55; margin-bottom: 9px; }
+    .guide img {
+      display: block; width: 100%; max-width: 100%; height: auto; margin: 8px 0 2px;
+      border: 1px solid var(--border); border-radius: 8px; background: #fff;
+    }
+    .guide .cap { font-size: 11px; color: var(--muted); margin: 2px 0 0; }
+    .guide a { color: var(--blue); word-break: break-all; }
+    .guide .tip {
+      background: #fffbea; border: 1px solid #fde68a; border-radius: 8px;
+      padding: 8px 10px; font-size: 12px; color: #713f12; margin: 6px 0 0;
+    }
+    .guide .tip a { color: #92400e; }
+    .guide .privacy {
+      background: var(--info-bg); border: 1px solid var(--info-border); border-radius: 8px;
+      padding: 8px 10px; font-size: 12px; color: #3a3a3a; margin: 6px 0 0;
+    }
+    .guide .privacy a { color: var(--blue); }
+    .pill { display:inline-block; background:#eef4f9; color:#0067b1; border-radius:6px; padding:1px 7px; font-weight:600; font-size:12px; }
+
+    #dropzone {
+      border: 2px dashed #c7d2dd; border-radius: 12px; padding: 22px 16px;
+      text-align: center; color: var(--muted); font-size: 13px; cursor: pointer;
+      transition: all .15s; background: #fafcfe;
+    }
+    #dropzone:hover, #dropzone.drag { border-color: var(--blue); background: #f0f7fc; color: var(--blue); }
+    #dropzone.ok { border-style: solid; border-color: var(--ok); background: #f0fbf3; color: var(--ok); font-weight: 600; }
+    details.manual { margin-top: 12px; }
+    details.manual summary { font-size: 13px; color: var(--blue); cursor: pointer; }
+    details.manual input { margin-top: 10px; }
+    .preview {
+      margin-top: 14px; padding: 12px 14px; border-radius: 10px;
+      background: #f0f7fc; border: 1px solid #d4e6f3; font-size: 13px; color: #084d7a;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .preview .code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 20px; font-weight: 700; letter-spacing: 3px; }
+    .preview .count { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; }
+    .hidden { display: none !important; }
+    .actions { margin-top: 24px; }
+    button.primary {
+      width: 100%; background: var(--blue); color: #fff; border: none;
+      border-radius: 10px; padding: 13px; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    button.primary:hover { background: var(--blue-dark); }
+    #status { text-align: center; font-size: 13px; margin-top: 12px; min-height: 18px; }
+    #status.ok { color: var(--ok); }
+    #status.err { color: var(--err); }
+    .warn {
+      margin-top: 22px; padding: 12px 14px; border-radius: 10px;
+      background: var(--warn-bg); border: 1px solid var(--warn-border);
+      font-size: 12px; color: #7c2d12; line-height: 1.5;
+    }
+    .info {
+      margin-top: 22px; padding: 12px 14px; border-radius: 10px;
+      background: var(--info-bg); border: 1px solid var(--info-border);
+      font-size: 12px; color: #3a3a3a; line-height: 1.5;
+    }
+    .info a { color: var(--blue); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">
+      <img class="logo" src="../icons/icon128.png" alt="" />
+      <h1>Accessify UPC</h1>
+    </div>
+    <p class="lead">Configúralo una vez y entra en <strong>login.upc.edu</strong> con un solo clic,
+      incluido el segundo factor (2FA).</p>
+
+    <details class="guide" open>
+      <summary>📋 Cómo configurar (paso a paso)</summary>
+      <ol>
+        <li>Entra en el siguiente enlace:<br>
+          <a href="https://login.upc.edu/realms/upc/account/account-security/signing-in" target="_blank" rel="noopener">login.upc.edu/realms/upc/account/account-security/signing-in</a>
+        </li>
+        <li>Haz clic en
+          <strong>«Configurar Aplicación autenticadora»</strong>.
+          <img src="../assets/img1.png" alt="Botón Configurar Aplicación autenticadora" />
+        </li>
+        <li>Aparecerá un <strong>código QR</strong>. <strong>Haz una captura o foto del QR y guárdala</strong>:
+          la necesitarás para configurar UPC Accessify en todos los navegadores/dispositivos que quieras.
+          <img src="../assets/img2.png" alt="Pantalla con el QR y los campos de registro" />
+        </li>
+        <li>Sube esa imagen del QR <strong>aquí abajo</strong> (zona «Arrastra el QR»). La extensión
+          empezará a mostrar el <strong>código de un solo uso</strong> en vivo.</li>
+        <li>En la página de la UPC, en <strong>«Nombre del dispositivo»</strong> escribe
+          <span class="pill">UPCAccessify</span>.
+          <div class="tip">Si prefieres usar otro nombre, podrás hacerlo: solo escribe abajo, en
+            <strong>«Nombre del dispositivo»</strong> de esta extensión, exactamente el mismo nombre.</div>
+        </li>
+        <li>Copia el <strong>código de un solo uso</strong> que muestra esta extensión y pégalo en el
+          campo <strong>«Código de un solo uso»</strong> de la UPC.</li>
+        <li><strong>Desmarca</strong> la casilla <strong>«Cerrar sesión en otros dispositivos»</strong>
+          para que tus demás métodos de 2FA sigan funcionando.</li>
+        <li>Pulsa <strong>«Enviar»</strong> en la página de la UPC.</li>
+        <li>Introduce tu <strong>usuario UPC</strong> en el campo <strong>«Usuario UPC»</strong> de abajo
+          (p. ej. <span class="pill">nombre.apellido</span>).</li>
+        <li>Introduce tu <strong>contraseña UPC</strong> en el campo <strong>«Contraseña»</strong> de abajo.
+          La extensión la usará para iniciar sesión por ti en <strong>login.upc.edu</strong>.
+          <div class="privacy">Todos los datos que guardas (usuario, contraseña y clave 2FA) se almacenan
+            <strong>únicamente en local</strong> en este navegador: no se comparten con nadie ni se envían
+            a ningún servidor. Como el proyecto es <strong>open source</strong>, puedes comprobarlo tú mismo
+            en <a href="https://github.com/Rexher74/AccessifyUPC" target="_blank" rel="noopener">GitHub</a>.</div>
+        </li>
+        <li>Por último, pulsa <strong>«Guardar»</strong> aquí abajo para guardar usuario, contraseña y 2FA
+          en este navegador.</li>
+      </ol>
+    </details>
+
+    <label for="username">Usuario UPC</label>
+    <input id="username" type="text" autocomplete="off" spellcheck="false" placeholder="p. ej. nombre.apellido" />
+
+    <label for="password">Contraseña</label>
+    <div class="pw">
+      <input id="password" type="password" autocomplete="off" placeholder="Tu contraseña" />
+      <button id="togglePw" type="button" title="Mostrar/ocultar">👁</button>
+    </div>
+
+    <h2>Doble factor (2FA)</h2>
+    <p class="hint">Sube la <strong>imagen del código QR</strong> (paso 3 de arriba). La extensión
+      extrae la clave y generará los códigos por ti. La imagen no se guarda: solo la clave.</p>
+
+    <div id="dropzone">
+      <input id="qrfile" type="file" accept="image/*" hidden />
+      📷 Arrastra aquí la imagen del QR o haz clic para seleccionarla
+    </div>
+
+    <details class="manual" id="manualDetails">
+      <summary>O introducir la clave manualmente</summary>
+      <input id="secret" type="text" autocomplete="off" spellcheck="false"
+             placeholder="Clave (Base32) o URI otpauth://…" />
+    </details>
+
+    <div id="preview" class="preview hidden">
+      <span>Código actual:</span>
+      <span class="code" id="code">––– –––</span>
+      <span class="count" id="count"></span>
+    </div>
+
+    <label for="deviceName">Nombre del dispositivo (Opcional)</label>
+    <p class="hint">El que escribiste en la UPC al registrar el QR (paso 5). Por defecto
+      <strong>UPC Accessify</strong>. Al iniciar sesión, la extensión seleccionará este dispositivo
+      en la lista de la UPC (ignora mayúsculas y espacios).</p>
+    <input id="deviceName" type="text" autocomplete="off" spellcheck="false" placeholder="UPCAccessify" />
+
+    <div class="actions">
+      <button id="save" class="primary">Guardar</button>
+    </div>
+    <div id="status"></div>
+
+    <p class="info">🔒 Tus datos se guardan <strong>solo en este navegador</strong> y no se envían a
+      ningún servidor.</p>
+    <p class="info">By Rexher · <strong>Open Source</strong> (licencia MIT). Código y contribuciones en
+      <a href="https://github.com/Rexher74/AccessifyUPC" target="_blank" rel="noopener">github.com/Rexher74/AccessifyUPC</a>.</p>
+  </main>
+
+  <script src="totp.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

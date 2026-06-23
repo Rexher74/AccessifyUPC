@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    :root { --blue: #0067b1; --muted: #6b7280; --border: #e1e5ea; --ok: #1a7f37; }
+    * { box-sizing: border-box; }
+    body {
+      width: 260px; margin: 0; padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1b1b1b;
+    }
+    .brand { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+    .logo { width: 26px; height: 26px; border-radius: 7px; flex: none; object-fit: contain; }
+    .brand b { font-size: 14px; }
+    .state { font-size: 13px; margin-bottom: 12px; }
+    .state .ok { color: var(--ok); font-weight: 600; }
+    .state .muted { color: var(--muted); }
+    .user { font-weight: 700; }
+    .code-box {
+      border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 12px; background: #f8fafc;
+    }
+    .code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 19px; font-weight: 700; letter-spacing: 2px; }
+    .count { margin-left: auto; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    button {
+      width: 100%; border: none; border-radius: 9px; padding: 10px;
+      font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 6px;
+    }
+    .primary { background: var(--blue); color: #fff; }
+    .primary:hover { background: #00558f; }
+    .ghost { background: #eef2f6; color: #1b1b1b; }
+    .ghost:hover { background: #e3e9ef; }
+    .hidden { display: none !important; }
+    .credit { margin-top: 12px; text-align: center; font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="brand"><img class="logo" src="../icons/icon128.png" alt="" /><b>Auto Login UPC</b></div>
+
+  <div class="state" id="state"></div>
+
+  <div class="code-box hidden" id="codeBox">
+    <span class="code" id="code">––– –––</span>
+    <span class="count" id="count"></span>
+  </div>
+
+  <button class="primary" id="openLogin">Abrir login.upc.edu</button>
+  <button class="ghost" id="openOptions">Configuración</button>
+  <p class="credit">por Rexher</p>
+
+  <script src="totp.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
